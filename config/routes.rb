@@ -11,6 +11,72 @@ class QueryParameterActionRecognizer
 end
 
 Rails.application.routes.draw do
+  # get '/', :to => redirect('/ui')
+
+  # scope '/ui' do
+  namespace :ui do
+    # new UI
+    resources :login, only: [:new, :create, :delete]
+    match '/logout', to: 'login#logout', via: [:delete]
+
+    get '/search' => 'search#search', :as => 'search'
+
+    # LDAP Routes. PUT for users-selection and saved-users-selection, because
+    # there's only one at a time.
+    namespace :ldap do
+      resource :connection_details, :only => [:edit, :update]
+      resource :selected_users, :only => [:show, :edit, :update]
+      resource :saved_users, :only => [:update]
+      resource :import_instructions, :only => [:show]
+    end
+
+    scope '/', format: false, id: /.+/, role: /.+/  do
+
+      get '/cluster', to: 'cluster#list'
+
+      [:groups, :hosts, :layers, :policies, :users, :webservices].each do |resource|
+        resources resource, only: [ :show ] do
+          get 'audit_events', on: :member
+          get 'audit_warnings', on: :member
+          get 'audit_updates', on: :member
+          get 'add_token', on: :member if resource == :layers
+          get 'ssh', on: :member if resource == :hosts
+        end
+        resources resource, :format => :html, :only => [:index]
+      end
+
+      # We alias "variables" as "secrets" in the UI, so we handle this route separately
+      resources :secrets, as: 'variables', controller: 'variables', only: [ :show ] do
+        get 'audit_events', on: :member
+        get 'audit_warnings', on: :member
+        get 'audit_updates', on: :member
+        get 'value', on: :member
+        post 'edit', on: :member
+        post 'rotate', on: :member
+      end
+      resources :secrets, as: 'variables', controller: 'variables', :format => :html, :only => [:index]
+
+      match '/layers/remove_token/:id', to: 'layers#remove_token', as: :layer_tokens, via: [:delete]
+      match '/list/members/:role', to: 'list#members', as: :list_members, via: [:get, :post]
+      match '/list/memberships/:role', to: 'list#memberships', as: :list_memberships, via: [:get, :post]
+      match '/list/privileges/:role', to: 'list#privileges', as: :list_privileges, via: [:get, :post]
+      match '/list/warnings/:role', to: 'list#warnings', as: :list_warnings, via: [:get, :post]
+
+      resources :roles, only: [] do
+        resources :members, only: [ :create, :destroy ]
+      end
+
+      get '/dashboard', to: 'dashboard#index'
+      get '/dashboard/audit_warnings', to: 'dashboard#audit_warnings'
+      get '/dashboard/audit_changes', to: 'dashboard#audit_changes'
+      get '/dashboard/audit_events', to: 'dashboard#audit_events'
+
+    end
+  end
+
+
+
+
   scope format: false do
     get '/' => 'status#index'
     get '/authenticators' => 'authenticate#index'

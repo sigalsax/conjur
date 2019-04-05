@@ -1,0 +1,25 @@
+%div#resource-list
+  - if resource_list_items.empty?
+    No
+    = kind
+    found.
+  - else
+    %table.table.table-bordered.table-hover.word-break
+      %thead
+        %tr
+          %th.col33
+            ID
+          %th.col33
+            Owner
+          %th.col33
+            Integrations
+      %tbody
+        = render partial: "resource_list_item", collection: resource_list_items, as: :resource_list_item
+
+    %div.text-center
+      = remote_button_for(show: less, path: less_path) do
+        %i.fa.fa-fw.fa-angle-double-left{{'aria-hidden':'true'}}
+        Show Less
+      = remote_button_for(show: more, path: more_path) do
+        Show More
+        %i.fa.fa-fw.fa-angle-double-right{{'aria-hidden':'true'}}

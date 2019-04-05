@@ -53,6 +53,7 @@ WORKDIR /src/conjur-server
 ADD Gemfile      .
 ADD Gemfile.lock .
 
+RUN bundle update
 RUN bundle
 
 RUN rm /etc/service/sshd/down

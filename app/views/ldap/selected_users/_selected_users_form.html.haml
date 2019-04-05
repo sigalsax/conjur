@@ -1,0 +1,75 @@
+.box.box-info
+  .box-header
+    %h3.box-title{id: 'users-selection-title'} 2. Select LDAP Users by Filtering
+  %form.form-horizontal{action: ldap_selected_users_path, method: 'post'}
+    = hidden_field_tag(request_forgery_protection_token.to_s, form_authenticity_token)
+    = hidden_field_tag('_method', 'put')
+    .box-body
+      %p Conjur successfully connected to your LDAP server. Now specify users and groups to be synced.
+      .form-group
+        %label.col-sm-4.control-label.required User filter
+        .col-sm-7
+          = text_field_tag('user_filter', @selected_users_form.user_filter, class: 'form-control')
+          .error_container.invisible
+            %span Field is required
+        .col-sm-1.help-column
+          %i.icon-help-circled-alt.help-text
+            %span.tooltip These search criteria are applied to select users to sync.
+      .form-group
+        %label.col-sm-4.control-label.required Group filter
+        .col-sm-7
+          = text_field_tag('group_filter', @selected_users_form.group_filter, class: 'form-control')
+          .error_container.invisible
+            %span Field is required
+        .col-sm-1.help-column
+          %i.icon-help-circled-alt.help-text
+            %span.tooltip These search criteria are applied to select groups to sync.
+      %p Map Conjur attribute names to the corresponding LDAP attribute names you use in your directory.
+      .form-group
+        %label.col-sm-4.control-label.required User login
+        .col-sm-7
+          = text_field_tag('user_name', @selected_users_form.user_name, class: 'form-control')
+          .error_container.invisible
+            %span Field is required
+        .col-sm-1.help-column
+          %i.icon-help-circled-alt.help-text
+            %span.tooltip Attribute of user objects to use for the login name in Conjur.
+      .form-group
+        %label.col-sm-4.control-label UID number
+        .col-sm-7
+          = text_field_tag('uid', @selected_users_form.uid, class: 'form-control')
+          .error_container.invisible
+            %span Field is required
+        .col-sm-1.help-column
+          %i.icon-help-circled-alt.help-text
+            %span.tooltip Attribute of user objects to use for the UID in Conjur.
+      .form-group
+        %label.col-sm-4.control-label SSH public key
+        .col-sm-7
+          = text_field_tag('public_key', @selected_users_form.public_key, class: 'form-control')
+          .error_container.invisible
+            %span Field is required
+        .col-sm-1.help-column
+          %i.icon-help-circled-alt.help-text
+            %span.tooltip Attribute of user objects to use for the SSH public key in Conjur.
+      .form-group
+        %label.col-sm-4.control-label.required Group name
+        .col-sm-7
+          = text_field_tag('group_name', @selected_users_form.group_name, class: 'form-control')
+          .error_container.invisible
+            %span Field is required
+        .col-sm-1.help-column
+          %i.icon-help-circled-alt.help-text
+            %span.tooltip Attribute of group objects to use as the name in Conjur.
+      .form-group
+        %label.col-sm-4.control-label GID
+        .col-sm-7
+          = text_field_tag('gid', @selected_users_form.gid, class: 'form-control')
+          .error_container.invisible
+            %span Field is required
+        .col-sm-1.help-column
+          %i.icon-help-circled-alt.help-text
+            %span.tooltip Attribute of group objects to use as the GID in Conjur.
+      .btn-toolbar{:role => "toolbar"}
+        %button.btn.btn-primary{:type => "submit"} Preview Selected Users
+        %button.btn.btn-primary{:disabled => "disabled", :style => "display:none;", :type => "button"} Save Users to Import

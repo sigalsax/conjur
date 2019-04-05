@@ -1,0 +1,60 @@
+// User menu
+.navbar-nav > .user-menu {
+    > .dropdown-menu {
+        .border-top-radius(0);
+        padding: 1px 0 0 0;
+        border-top-width: 0;
+        background-color: @header-bg-color;
+    }
+    // Dropdowns for navbar
+    > .dropdown-menu {
+        box-shadow: none;
+
+        > li > a {
+            color: #fff;
+
+            &:hover {
+                background-color: @header-hover-color;
+                color: #fff;
+            }
+
+            &:focus {
+                background-color: @header-hover-color;
+                color: #fff;
+            }
+        }
+
+        > .divider {
+            background-color: #eee;
+        }
+    }
+}
+
+/* Fix dropdown menu in navbars */
+.navbar-custom-menu > .navbar-nav {
+    > li {
+        position: relative;
+
+        > .dropdown-menu {
+            position: absolute;
+            padding: 0;
+            border: 0;
+            right: 0;
+            left: auto;
+        }
+    }
+}
+
+@media (max-width: @screen-sm-max) {
+    .navbar-custom-menu > .navbar-nav {
+        > li {
+            position: static;
+
+            > .dropdown-menu {
+                position: absolute;
+                right: 0%;
+                left: auto;
+            }
+        }
+    }
+}

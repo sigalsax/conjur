@@ -1,0 +1,87 @@
+.role-graph {
+    height: 300px;
+}
+
+.role-graph-svg {
+    border: 1px solid @box-border-color;
+}
+
+.role-graph-svg:hover {
+    background-color: #f4f4f4;
+}
+
+.rg-container {
+    width: 100%;
+}
+
+.rg-container .loaded {
+    min-height: 500px;
+}
+
+/** SVG role graph styles **/
+.node rect {
+    stroke: #333;
+    fill: #fff;
+}
+
+svg .label {
+    font-weight: normal;
+    height: auto;
+    width: auto;
+}
+
+.edgePath path {
+    stroke: #333;
+    fill: #333;
+    stroke-width: 1.5px;
+}
+
+g.current-role > rect {
+    fill: @green;
+}
+
+g.current-role {
+  .b-link-to {
+    color: #fff;
+  }
+}
+
+.role-graph-interactive .role-graph-svg {
+    background-color: @white;
+}
+
+
+.graph-tip {
+    line-height: 1;
+    font-weight: bold;
+    padding: 12px;
+    color: #fff;
+    border-radius: 5px;
+    position: relative;
+    -webkit-transition: opacity 0.5s ease-in-out;
+    -moz-transition: opacity 0.5s ease-in-out;
+    transition: opacity 0.5s ease-in-out;
+    z-index: 999;
+    .tip-header {
+        font-size: larger;
+    }
+    .tip-content {
+        font-weight: normal;
+    }
+}
+
+.graph-tip:before {
+    content: "";
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top-width: 10px;
+    border-top-style: solid;
+    position:absolute;
+    bottom: -9px;
+    left: 0;
+    right: 0;
+    display: block;
+    margin: 0 auto;
+}

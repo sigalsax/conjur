@@ -1,0 +1,174 @@
+#ldap-sync { }
+
+.full-width-textboxes input:not(#port) {
+    width: 100%;
+}
+
+input#host {
+    overflow: hidden;
+}
+
+.rounded-box {
+    padding-top: 15px;
+    padding: 10px;
+    background: #374850;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+.rounded-box i {
+    color: white;
+}
+
+#ldap-sync hr {
+    color: black;
+}
+
+.map-text {
+    font-style: italic;
+    display: inline-block;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.second-input {
+    padding-left: 0px;
+}
+
+.group-results-list, .user-results-list {
+    list-style: none;
+    padding-left: 22px;
+    padding-top: 8px;
+    margin-right: 10px;
+}
+
+.group-results-list li, .user-results-list li {
+    padding-left: 1.3em;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    border-bottom: solid 1px #B5B9C1;
+    &.not-shown { display: none; }
+}
+
+.group-results-list li:before {
+  content: "\E806";
+  font-family: Fontello;
+  display: inline-block;
+  margin-left: -1.3em; /* same as padding-left set on li */
+  width: 1.3em; /* same as padding-left set on li */
+}
+
+.user-results-list li:before {
+  content: "\E805";
+  font-family: Fontello;
+  display: inline-block;
+  margin-left: -1.3em; /* same as padding-left set on li */
+  width: 1.3em; /* same as padding-left set on li */
+}
+
+.large-cta {
+    text-align: center;
+}
+
+.large-cta .btn-primary {
+    width: 50%;
+}
+
+span.search-header {
+    margin-left: 10px;
+}
+
+i.help-text {
+    padding: 2px;
+    border-radius: 3px;
+    color: #374850;
+    padding-right: 2px;
+    padding-left: 2px;
+}
+
+.help-column {
+    padding-left: 0px;
+    padding-right: 0px;
+    padding-top: 7px;
+}
+
+a.what-happens {
+    color: #374850;
+}
+
+a.what-happens:hover {
+    color: #3C8DBC;
+}
+
+.what-happens .tooltip {
+    margin-top: -180px;
+    max-width: 400px;
+}
+
+@media (max-width: 786px) {
+
+.second-input {
+    padding-left: 15px;
+    margin-top: 15px;
+}
+
+.help-column {
+    padding-left: 15px;
+    padding-top: 7px;
+}
+
+}
+
+.lag:hover .lag-tooltip {
+    display:block;
+}
+
+.lag-tooltip {
+    display: none;
+    color: white;
+    margin-left: -50px;
+    margin-top: 3px;
+    border-radius: 5px;
+    position: absolute;
+    z-index: 1000;
+    background-color: #374850;
+    padding: 10px;
+    min-width: 100px;
+}
+
+
+.lag-tooltip:before{
+    content:'';
+    display:block;
+    width:0;
+    height:0;
+    position:absolute;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 5px solid #374850;
+    left:50%;
+    top:-5px;
+}
+p.ldap-stage-description {
+    margin-bottom: 20px;
+}
+
+div.ldap-code-snippet {
+    margin-bottom: 30px;
+}
+
+tt.code {
+    background-color: rgb(244,244,244);
+    border: solid 1px rgb(200,200,200);
+    border-radius: 2px;
+    padding: 10px;
+    width: 100%;
+    display: block;
+    margin-bottom: 20px;
+}
+
+#ldap-sync .box-header {
+    border-bottom: solid 1px rgba(244,245,244,1);
+}

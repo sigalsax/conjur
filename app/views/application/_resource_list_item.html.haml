@@ -1,0 +1,10 @@
+%tr
+  %td
+    = render partial: "resource_link", locals: resource_list_item[:resource]
+  %td
+    = render partial: "resource_link", locals: resource_list_item[:owner]
+  - if resource_list_item[:integrations].empty?
+    %td
+  - else
+    %td
+      = render partial: "integration_badge", collection: resource_list_item[:integrations], as: :integration

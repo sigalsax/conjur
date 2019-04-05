@@ -1,0 +1,4 @@
+- if show
+  = form_tag path, :remote => true, :method => :get, :style => 'display: inline;' do
+    %button.btn.btn-default{:type => :submit, data: { disable_with: "Please wait..." }}
+      =capture(&block)

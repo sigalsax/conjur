@@ -1,0 +1,25 @@
+.col-xs-12
+  .box.box-info
+    .box-header
+      %h3.box-title{id: 'how-to-import-title'} 4. How to Import into Conjur
+    %form.form-horizontal
+      .box-body
+        %p.ldap-stage-description Conjur is now ready to import your selected LDAP users.
+        .ldap-code-snippet
+          %p First we'll create a policy based on your selected users. The following command will create a policy file in your current directory:
+          %p
+            %tt.code $ conjur ldap-sync policy show &gt; ldap-sync.yml
+          %p Finally, we load that policy into Conjur by running the following command.
+          %p
+            %span Note, that before running this command, you must first authenticate as a role which has been granted permission to load policy into the
+            %tt root
+            %span namespace.
+          %p
+            %tt.code
+              $ conjur policy load root ldap-sync.yml
+        %p Once the policy is loaded groups imported from LDAP will look like this:
+        %p
+          %a.b-link-to.icon-group-ldap GroupName
+        %p
+          %span More information on using LDAP Sync, including running it as a job, can be found in the
+          %a{:href => "https://docs.conjur.org/Latest/en/Content/Operations/Services/ldap_sync.html", :target => "_blank"} Conjur Docs

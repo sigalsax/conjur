@@ -1,0 +1,178 @@
+.b-chart {
+    height: 100%;
+}
+
+/* Line Chart */
+
+.d3-line-chart {
+    font: 10px sans-serif;
+}
+
+.d3-line-chart__inner {
+
+}
+
+/* Axises */
+
+.d3-axis {
+
+}
+
+.d3-axis__x line,
+.d3-axis__x path {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+}
+
+.d3-axis__y line,
+.d3-axis__y path {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+}
+
+/* Legend */
+
+.d3-legend {
+
+}
+
+.d3-legend__item {
+
+}
+
+.d3-legend__item:hover {
+    cursor: pointer;
+}
+
+/* Graph */
+
+.d3-graph {
+
+}
+
+.d3-graph__line {
+
+}
+
+.d3-graph__line path {
+    fill: none;
+    stroke: steelblue;
+    stroke-width: 1.5px;
+}
+
+.d3-graph__focus {
+
+}
+
+.d3-graph__focus circle {
+    fill: none;
+    stroke: steelblue;
+}
+
+.d3-graph__overlay {
+    fill: none;
+    pointer-events: all;
+}
+
+// -----------------------
+// =======================
+
+.chart {
+
+}
+
+.chart-x-axis path {
+    fill: none;
+    stroke: #fff;
+    shape-rendering: crispEdges;
+}
+
+.chart-y-axis path {
+    fill: none;
+    stroke: #fff;
+    shape-rendering: crispEdges;
+}
+
+.chart-axis-ticks {
+    fill: white;
+}
+
+.chart-axis-tick {
+
+}
+
+.chart-line {
+
+}
+
+.chart-line-data-series {
+
+}
+
+.chart-line-data-series-line {
+
+}
+
+.chart-bar {
+
+}
+
+.chart-bar-data-series {
+
+}
+
+.chart-bar-data-series-bar-bg {
+    fill: white;
+}
+
+.chart-bar-data-series-bar-data {
+    fill: grey;
+
+    &:hover {
+        fill: red;
+    }
+}
+
+.activity-graph-container {
+    max-width: 700px;
+}
+
+.activity-chart {
+    .legend {
+        height: 20%;
+        color: #AAA;
+        ul {
+            padding: 0px;
+            margin: 0px;
+        }
+        li {
+            list-style-type: none;
+            display: inline-block;
+            @media (max-width: @screen-xs-max) {
+              width: 40%;
+            }
+            @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+              width: 33%;
+            }
+            @media (min-width: @screen-md-min) and (max-width: @screen-md-graph-max) {
+              width: 50%;
+            }
+            @media (min-width: @screen-xlg-graph-min) {
+              width: 33%;
+            }
+            span.box {
+                display: inline-block;
+                width: 15px;
+                height: 15px;
+                margin: 0px 4px 0px 12px;
+                vertical-align: middle;
+            }
+        }
+        li:nth-child(3):after {
+            content: "\A";
+            white-space: pre;
+        }
+    }
+}

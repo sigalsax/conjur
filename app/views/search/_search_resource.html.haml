@@ -1,0 +1,12 @@
+%tr
+  %td= link_to_object(resource.resourceid)
+  %td= link_to_object(resource.owner)
+  %td.capitalize{:class => "icon-#{resource.kind}-color"}
+    %i{:class => "icon-#{resource.kind}"}
+    = resource_kind_label(resource)
+  %td
+    - valid_integrations.each do |key, value|
+      - if resource.annotations[key].present?
+        .buttonize.outline
+          %i{:class => "icon-#{key}"}
+          %span= value

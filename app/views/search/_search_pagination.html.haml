@@ -1,0 +1,32 @@
+.col-md-12
+  .pagination
+    -if search.total_count > 0
+      -if search.total_count > search.per_page
+
+        - if search.page == "all"
+          - if search.total_count > search.max_results || search.total_count > (search.max_results.to_f / search.limited_to_resources.count).ceil * search.limited_to_resources.count
+            %span.showing (showing some of #{search.total_count} results)
+          - else
+            %span.showing (showing all #{search.total_count} results)
+
+        - else
+          .pull-right
+            %span.showing (showing #{search.showing_min} - #{search.showing_max} of #{search.total_count})
+          .pagination-inner
+            - if search.page.to_i > 1
+              = link_to(search_path(search: search.to_params.merge(page: search.page.to_i - 1)), :class => "arrow previous" ) do
+                %i.fa.fa-lg.fa-chevron-left
+            - search.total_pages.times do |i|
+              - if (i+1) == search.page.to_i
+                = link_to i+1, search_path(search: search.to_params.merge(page: i + 1)), :class => "current"
+              - else
+                = link_to i+1, search_path(search: search.to_params.merge(page: i+1))
+            = link_to("View All", search: search.to_params.merge(page: 'all'))
+            - if search.page.to_i < search.total_pages
+              = link_to(search_path(search: search.to_params.merge(page: search.page.to_i + 1)), :class => "arrow next" ) do
+                %i.fa.fa-lg.fa-chevron-right
+
+      - else
+        %span.showing (showing all results)
+    - else
+      %span.showing (no results found)

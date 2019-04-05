@@ -1,0 +1,58 @@
+.row
+  .col-md-12
+    .box#details
+      .box-header.with-border
+        %h3.box-title Details
+      .box-body
+        - if resource_details.description
+          %p.description= resource_details.description
+
+        %dl.dl-horizontal
+          %dt Name
+          %dd= link_to_object resource_details
+
+          - if owner_is_policy?(resource_details)
+            %dt.policy Policy
+          - else
+            %dt.owner Owner
+          %dd= link_to_object(resource_details.owner)
+
+          - if resource_details.try(:uidnumber)
+            %dt UID number
+            %dd= resource_details.uidnumber
+
+          - if resource_details.try(:gidnumber)
+            %dt GID number
+            %dd= resource_details.gidnumber
+
+          %dt Created By
+          %dd= link_to_object(resource_details.created_by)
+
+          - if resource_details.created_at
+            %dt Created At
+            %dd= resource_details.created_at.to_s(:full_datetime)
+
+          - if resource_details.ldap?
+            %dt LDAP Directory
+            %dd= resource_details.ldap_source
+
+          %dt Annotations
+          %dd
+            - if resource_details.annotations.empty?
+              %span No annotations
+            - else
+              %ul.list-unstyled
+                - resource_details.annotations.sort.to_h.each do |name, value|
+                  %li
+                    %strong= name.to_s
+                    = value
+
+          %dt Integrations
+          %dd
+            - if resource_details.integrations.empty?
+              %span No integrations
+            - else
+              - resource_details.integrations.sort.to_h.each do |name, value|
+                .integration.buttonize.outline.no-click
+                  %i{:class => "icon-#{name}"}
+                  = name.to_s.humanize

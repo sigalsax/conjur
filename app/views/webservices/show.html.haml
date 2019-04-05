@@ -1,0 +1,53 @@
+%section.content-header.content-header-resource
+  %h1{title: @webservice.id}
+    %i.icon-webservice= @webservice.id
+  %ol.breadcrumb
+    - if owner_is_policy? @webservice
+      %li= link_to_object @webservice.owner
+      %li.active= policy_unqualified_id @webservice
+    - else
+      %li= link_to 'Webservices', webservices_path
+      %li.active{title: @webservice.id}= @webservice.id
+
+%section.content
+  = render partial: "resource_details", object: @webservice
+
+  .row
+    .col-md-12
+      .box
+        .box-header.with-border
+          %h3.box-title Permissions
+        .box-body
+          - if @webservice.permissions_on.blank? || ( @webservice.permissions_on.length == 1 && @webservice.permissions_on.first.owner)
+            %span There are no permissions available
+          - else
+            %h4.box-title Privileges Held
+            #privileges-table
+              %table.table.table-bordered.table-hover
+                %thead
+                  %tr
+                    %th Role
+                    %th Privileges
+                    %th Resource
+                %tbody
+                  - @webservice.permissions_on.each do |permission|
+                    - next if permission.owner
+                    %tr
+                      %td
+                        = link_to_object permission.role
+                      %td
+                        - if permission.owner
+                          %strong owner
+                        - else
+                          = permission.privileges.sort.join(', ')
+                      %td
+                        = link_to_object permission.resource
+
+  .row
+    .col-md-12
+      .box
+        .box-header.with-border
+          %h3.box-title Audit Events
+        .box-body
+          #audit_events-table
+            = render partial: "audit_events_table", object: @webservice.audit_events

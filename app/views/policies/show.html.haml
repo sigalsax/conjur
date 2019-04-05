@@ -1,0 +1,40 @@
+%section.content-header.content-header-resource
+  %h1{title: @policy.id}
+    %i.icon-policy= @policy.id
+  %ol.breadcrumb
+    - if owner_is_policy? @policy
+      %li= link_to_object @policy.owner
+      %li.active{title: policy_unqualified_id(@policy)}= policy_unqualified_id @policy
+    - else
+      %li= link_to 'Policies', policies_path
+      %li.active{title: @policy.id}= @policy.id
+
+%section.content
+  = render partial: "resource_details", object: @policy
+
+  .row
+    .col-md-12
+      .box
+        = render partial: "role_graph", object: @policy.role_graph
+
+  .row
+    .col-md-12
+      .box
+        = render partial: "permissions_table", object: @policy
+
+  .row
+    .col-md-12
+      .box
+        .box-header.with-border
+          %h3.box-title Members
+        .box-body
+          #members-table
+            = render partial: "members_table", object: @policy.policy_members, locals: { container: @policy, kind: "policy", editable: false }
+
+  .row
+    .col-md-12
+      .box
+        .box-header.with-border
+          %h3.box-title Audit Events
+        .box-body
+          = render partial: "audit_table", object: @policy.audit_events[1]

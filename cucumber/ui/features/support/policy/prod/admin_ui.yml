@@ -1,0 +1,36 @@
+- !policy 
+  id: admin-ui/v1
+  annotations:
+    description: Manages permissions within the admin UI web application
+  body:
+    - &variables
+      - !variable
+        id: ssl/private_key
+        mime_type: application/x-pem-file
+        annotations:
+          description: Private key for communication over SSL
+      - !variable
+        id: ssl/certificate
+        mime_type: application/x-x509-ca-cert
+        annotations:
+          description: Certificate for communication over SSL
+        
+    - !group
+      id: secret-managers
+      annotations:
+        description: Members are able to update the value of all secrets within the policy
+        editable: "true"
+        
+    - !layer
+      annotations:
+        description: Hosts in this layer can fetch all 'admin-ui/v1' variables
+        
+    - !permit
+      role: !group secret-managers
+      privilege: [ read, execute, update ]
+      resource: *variables
+      
+    - !permit
+      role: !layer
+      privilege: [ read, execute ]
+      resource: *variables

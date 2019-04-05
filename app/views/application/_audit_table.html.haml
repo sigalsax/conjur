@@ -1,0 +1,19 @@
+- label ||= 'audit events'
+- if !audit_table.empty?
+  %table.table.table-bordered.table-hover
+    %thead
+      %tr
+        %th Time
+        %th User
+        %th Action
+    %tbody
+      - audit_table.each do |audit|
+        %tr
+          %td= audit_time_tag audit.timestamp
+          %td= link_to_object audit.user rescue ''
+          %td!= audit.message(lambda{|e| link_to_object(e)}, lambda{|e| link_to_object(e)})
+- else
+  %p
+    There are no
+    =label
+    available

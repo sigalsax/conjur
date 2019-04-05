@@ -1,0 +1,114 @@
+// Content Header
+.content-header {
+    background-color: @cybr-blue;
+    color: @white;
+    position: relative;
+    margin-bottom: 20px;
+    padding: 20px 30px 20px 30px; 
+
+    // Header Text
+    > h1 {
+        margin: 0;
+        font-size: 24px;
+        color: @white;
+        line-height: 1.5em;
+
+        i {
+            color: @white;
+            font-size: 24px;
+        }
+
+        > small {
+            font-size: 15px;
+            display: inline-block;
+            padding-left: 4px;
+            font-weight: 300;
+        }
+    }
+
+    > .breadcrumb {
+        color: @white;
+        float: right;
+        background: transparent;
+        margin: 0;
+        font-size: 12px;
+        padding: 7px 5px;
+        position: absolute;
+        top: 22px;
+        right: 30px;
+        .border-radius(2px);
+
+        a span {
+            color: #fff;
+        }
+
+        > .active {
+          color: @white;
+        }
+
+        > li > a {
+            color: @white;
+            text-decoration: none;
+            display: inline-block;
+
+            > .fa, > .glyphicon, > .ion {
+                margin-right: 5px;
+            }
+        }
+
+        > li + li:before {
+            content: '>\00a0';
+        }
+    }
+
+    // ol.breadcrumb a span {
+    //     color: #fff;
+    // }
+
+    @media (max-width: @screen-sm-max) {
+        > .breadcrumb {
+            position: relative;
+            margin-top: 5px;
+            top: 0;
+            right: 0;
+            float: none;
+            padding-left: 10px;
+
+            li:before {
+                color: darken(@gray, 20%);
+            }
+        }
+    }
+    @media (max-width: @screen-sm) {
+
+    }
+
+    &.content-header-resource {
+        h1 {
+            max-width: 60%;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        > .breadcrumb {
+            max-width: 30%;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        @media (max-width: @screen-sm-max) {
+            h1 {
+                max-width: 100%;
+            }
+
+            > .breadcrumb {
+                max-width: 100%;
+            }
+        }
+    }
+}
+.content-footer {
+    font-size: 20px;
+}

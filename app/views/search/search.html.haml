@@ -1,0 +1,63 @@
+%section.content-header
+  %h1
+    Search results
+  %h2
+    %span
+      Found #{search.total_count} resources matching "#{h(search.query)}"
+
+  - if search.page == "all" && ( search.total_count > search.max_results || search.total_count > (search.max_results.to_f / search.limited_to_resources.count).ceil * search.limited_to_resources.count )
+    .warn-total-results
+      .alert.alert-info
+        %i.fa.fa-lg.fa-info-circle &nbsp;
+        %span Your search returned too many results.  For performance reasons, you are being shown only a portion of the total available results.  Please use the below filters to refine your search!
+
+    .b-refresh.hidden
+%section.content
+  .row
+    .col-md-12
+      .box
+        .box-header
+          %h3.box-title Filters
+        .box-body
+          = form_for search, url: search_path, method: :get do |f|
+            = f.hidden_field :query
+            = f.hidden_field :page
+            .row.row-eq-height
+              .col-md-6
+                #resource-filters.filter-box.clearfix
+                  .filters-title
+                    Resources
+                    .pull-right
+                      %span.select-all Select All
+                      %span &nbsp;|&nbsp;
+                      %span.deselect-all Deselect All
+                  - search.resource_kinds.each do |kind, label|
+                    = render partial: "search_filters", locals: { f: f, kind: kind, label: label }
+              .col-md-6
+                #integration-filters.filter-box.clearfix
+                  .filters-title
+                    Integrations
+                    .pull-right
+                      %span.select-all Select All
+                      %span &nbsp;|&nbsp;
+                      %span.deselect-all Deselect All
+                  - search.valid_integrations.each do |key, label|
+                    = render partial: "search_annotations", locals: { f: f, key: key, label: label }
+
+    #search-group
+      .col-md-12
+        .box
+          .box-body
+            %table.table.table-bordered.table-hover.search-table
+              %thead
+
+                %tr
+                  %th.col35 Name
+                  %th.col20 Owner
+                  %th.col15 Resource Type
+                  %th.col30 Integration
+                %tbody
+                  - results.each do |resource|
+                    = render :partial => "search_resource", :locals => { :resource => resource, :valid_integrations => search.valid_integrations }
+
+            = render :partial => "search_pagination", :locals => { :search => search }

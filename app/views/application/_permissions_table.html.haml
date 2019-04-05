@@ -1,0 +1,12 @@
+.box-header.with-border
+  %h3.box-title Permissions
+.box-body
+  %h4.box-title Group Memberships
+  #memberships-table
+    = render partial: "memberships_table", object: permissions_table.memberships, locals: { editable: false }
+
+  %hr
+
+  %h4.box-title Privileges Held
+  #privileges-table
+    = render partial: "privileges_table", object: permissions_table.permissions

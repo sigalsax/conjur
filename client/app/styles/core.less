@@ -1,0 +1,281 @@
+@font-family: 'open_sans_regular', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+html, body {
+    min-height: 100%;
+}
+
+body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-family: @font-family;
+    font-weight: 400;
+    overflow-x: hidden;
+    overflow-y: auto;
+    color: @font-color-normal;
+}
+
+.wrapper {
+    .clearfix();
+
+    min-height: 100%;
+    position: static;
+}
+
+.sidebar-collapse {
+    section, .main-footer {
+        margin-left: 0px;
+        padding-left:40px;
+        padding-right:40px;
+    }
+}
+
+.content-wrapper, .main-footer {
+    // Using disposable variable to join statements with a comma
+    @transition-rule: @transition-speed @transition-fn,
+    margin @transition-speed @transition-fn;
+
+    .transition-transform(@transition-rule);
+
+    margin-left: @sidebar-width;
+    z-index: 820;
+
+    @media (max-width: @screen-xs-max) {
+        margin-left: 0;
+        padding-top: 0;
+    }
+
+
+    // When opening the sidebar on large screens
+    .sidebar-collapse & {
+        @media (min-width: @screen-sm) {
+            margin-left: 0;
+            padding-top: 0;
+        }
+    }
+
+    // When opening the sidebar on small screens
+    .sidebar-open & {
+        @media (max-width: @screen-xs-max) {
+            .translate(@sidebar-width, 0);
+        }
+    }
+}
+
+.content-wrapper {
+    min-height: 100%;
+    padding-top: 56px;
+    //background-color: @body-bg;
+    z-index: 800;
+    @media (max-width: @screen-xs-max) {
+      padding-top: 0;
+    }
+}
+
+.content {
+    min-height: 250px;
+    padding: 15px;
+    .container-fixed(@grid-gutter-width);
+}
+
+.content-alert {
+    .container-fixed(@grid-gutter-width);
+    margin-top: 15px;
+    margin-bottom: 7px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: @font-family;
+}
+
+a {
+    color: @link-color;
+}
+
+a:hover,
+a:active,
+a:focus {
+    outline: none;
+    text-decoration: none;
+    color: @link-hover-color;
+}
+
+i {
+    font-style: normal;
+}
+
+label.required:after {
+    padding-left: 5px;
+    color: red;
+    content: "*";
+}
+
+@import "./fonts/fontello-codes.less";
+
+.icon-group-ldap:before {
+    content:'\e806''\00a0''\e819';
+    color: #48715A;
+    margin-right: 40px;
+}
+
+a.icon-group-ldap {
+    color: #48715A;
+    background-color: #D4E4DB;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.icon-user-ldap:before {
+    content:'\e805''\00a0''\e819';
+    color: #48715A;
+    margin-right: 36px;
+}
+
+a.icon-user-ldap {
+    color: #48715A;
+    background-color: #D4E4DB;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.main-footer {
+    background: #fff;
+    padding: 15px;
+    color: #444;
+    border-top: 1px solid @gray;
+}
+
+.dl-horizontal {
+    dt {
+        width: 100px;
+        padding-top: 2px;
+        padding-bottom: 2px;
+    }
+
+    dd {
+        margin-left: 110px;
+        padding-top: 2px;
+        padding-bottom: 2px;
+    }
+}
+
+.bg-wrapper {
+    background: rgb(47,115,176);
+    background: radial-gradient(circle, rgba(47,115,176,1) 22%, rgba(14,34,40,1) 100%);
+    min-height: 100%;
+    position: absolute;
+    min-width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tab-content {
+    padding-top: 10px;
+}
+
+.noselect {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.bg-info {
+    background-color: #00c0ef;
+}
+
+.bg-status {
+    background-color: @status;
+}
+
+.bg-green {
+    background-color: @green;
+}
+
+ .no-caret > a.dropdown-toggle > span.caret {
+    display: none;
+}
+
+/* CSS Tooltip must be in this order */
+
+.help-text:hover .tooltip {
+    display:block;
+}
+
+.help-text-cluster {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tooltip {
+    display: none;
+    color: white;
+    margin-left: -240px;
+    margin-top: -15px;
+    border-radius: 5px;
+    position: absolute;
+    z-index: 1000;
+    background-color: #374850;
+    padding: 10px;
+    width: 236px;
+    @media (max-width: @screen-sm) {
+      margin-left: 6px;
+      width: 350px;
+      margin-top: 6px;
+    }
+    @media (max-width: @screen-xs) {
+      width: 250px;
+      margin-top: 6px;
+    }
+}
+
+.icon-puppet {
+    margin-right: 0.2em;
+    display: inline-block;
+}
+
+.icon-cloudfoundry {
+    margin-right: 0.2em;
+    display: inline-block;
+}
+
+.icon-pivotalcloudfoundry {
+    margin-right: 0.2em;
+    display: inline-block;
+}
+
+.icon-kubernetes {
+    margin-right: 0.2em;
+    display: inline-block;
+}
+
+.icon-terraform {
+    margin-right: 0.2em;
+    display: inline-block;
+}
+
+.icon-vault {
+    margin-right: 0.2em;
+    display: inline-block;
+}
+
+.icon-openshift {
+    margin-right: 0.2em;
+    display: inline-block;
+}
+
+/* End Tooltip */
+
+
+.box-title {
+  margin-top: 5px;
+}
+
+/* Bootstrap grid override */
+.col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 {
+  padding-left: 30px;
+  padding-right: 30px;
+}

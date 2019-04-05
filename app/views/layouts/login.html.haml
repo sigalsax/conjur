@@ -1,0 +1,19 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %title Conjur UI
+
+    -# Don't add references to JavaScript files/URLs here. They need
+    -# to get packaged into the webpack bundle by adding them to
+    -# package.json.
+
+    = javascript_include_tag 'webpack-bundle'
+    = stylesheet_link_tag 'webpack-bundle'
+    %script{:type => "application/javascript"}
+      localStorage.removeItem('conjur');
+    = csrf_meta_tags
+    = favicon_link_tag
+  %body.pace-done
+    .bg-wrapper
+      = yield

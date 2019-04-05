@@ -1,0 +1,8 @@
+- !policy 
+  id: openvpn/v1
+  annotations:
+    description: Manages permissions within Access Server hosts
+  body:
+    - !layer
+      annotations:
+        description: Reserved for Access Server hosts

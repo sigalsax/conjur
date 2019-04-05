@@ -1,0 +1,6 @@
+.filter
+  = f.check_box key, checked: params["search"] ? params["search"][key] == "1" : false
+  &nbsp;
+  .buttonize.outline
+    %i{class: "icon-#{key}"}
+    = f.label key, label

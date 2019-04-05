@@ -1,0 +1,31 @@
+.col-lg-6
+  .box.box-dark
+    .box-header.with-border
+      %h3.box-title{id: 'selected-users-error-title'} Error Selecting Users
+    .box-body
+      .alert.alert-warning
+        %h4
+          %i.icon-warning
+          %span Failed To Execute Search
+    %div
+      .box-header.with-border
+        %h4= @error_message
+        .box-tools.pull-right
+          %button.btn.btn-box-tool
+            %i.icon-cancel
+      - if @search_error
+        .box-body
+          %table.table.table-bordered
+            %thead
+              %tr
+                %th timestamp
+                %th severity
+                %th message
+            %tbody
+              - @search_error.log_entries.each do |entry|
+                %tr
+                  %td
+                    %pre= entry.timestamp
+                  %td
+                    %pre= entry.severity
+                  %td= entry.message

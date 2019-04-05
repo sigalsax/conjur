@@ -1,0 +1,99 @@
+# SSH entitlements
+  
+- !grant
+  role: !automatic-role
+    record: !layer prod/analytics/v1
+    role_name: admin_host
+  member: !group developers-admin
+  
+- !grant
+  role: !automatic-role
+    record: !layer prod/analytics/v1
+    role_name: use_host
+  member: !group developers
+  
+- !grant
+  role: !automatic-role
+    record: !layer prod/bastion/v1
+    role_name: use_host
+  members: 
+  - !automatic-role
+    record: !layer prod/analytics/v1
+    role_name: use_host
+  - !automatic-role
+    record: !layer prod/frontend/v1
+    role_name: use_host
+  - !automatic-role
+    record: !layer prod/inventory/v1
+    role_name: use_host
+  - !automatic-role
+    record: !layer prod/admin-ui/v1
+    role_name: use_host
+  - !automatic-role
+    record: !layer prod/user-database/v1
+    role_name: use_host
+    
+- !grant
+  role: !automatic-role
+    record: !layer prod/admin-ui/v1
+    role_name: admin_host
+  member: !group developers-admin
+  
+- !grant
+  role: !automatic-role
+    record: !layer prod/admin-ui/v1
+    role_name: use_host
+  member:
+  - !group developers
+  - !group researchers
+  
+- !grant
+  role: !automatic-role
+    record: !layer prod/frontend/v1
+    role_name: admin_host
+  member: !group developers-admin
+  
+- !grant
+  role: !automatic-role
+    record: !layer prod/frontend/v1
+    role_name: use_host
+  member: 
+  - !group developers
+  - !group researchers
+  
+- !grant
+  role: !automatic-role
+    record: !layer prod/openvpn/v1
+    role_name: admin_host
+  member: !group operations
+
+- !grant
+  role: !automatic-role
+    record: !layer prod/salt/v1
+    role_name: admin_host
+  member: !group operations
+
+- !grant
+  role: !automatic-role
+    record: !layer prod/user-database/v1
+    role_name: admin_host
+  member: !group developers-admin
+
+- !grant
+  role: !automatic-role
+    record: !layer prod/user-database/v1
+    role_name: use_host
+  member: !group developers
+
+- !grant
+  role: !automatic-role
+    record: !layer ci/jenkins/v1/executors
+    role_name: admin_host
+  member: !group ci
+
+- !grant
+  role: !automatic-role
+    record: !layer ci/jenkins/v1/master
+    role_name: admin_host
+  member: !group ci
+

@@ -1,0 +1,20 @@
+%section.content-header
+  %h1
+    = title
+
+%section.content
+  .row
+    .col-md-12
+      .box
+        .box-header
+          .row
+            .col-md-8
+            .col-md-4.btn-group
+              = form_tag resource_list_path, :remote => true, :method => :get, :class => 'search-form pull-right' do
+                .input-group
+                  %input.form-control.search-input{type: 'text', name: 'search', placeholder: 'Search...', value: search}
+                  %span.input-group-btn
+                    %button.btn.btn-flat{type: 'submit', value: 'Search'}
+                      %i.icon-search
+        .box-body
+          = render partial: "resource_list", locals: resource_list

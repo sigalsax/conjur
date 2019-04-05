@@ -1,0 +1,65 @@
+%section.content-header.content-header-resource
+  %h1{title: @user.id}
+    %i.icon-user= @user.id
+  %ol.breadcrumb
+    %li= link_to 'Users', users_path
+    %li.active{title: @user.id}= @user.id
+
+%section.content
+  = render partial: "resource_details", object: @user
+
+  .row
+    .col-md-12
+      .box
+        = render partial: "role_graph", object: @user.role_graph
+
+  .row
+    .col-md-12
+      .box
+        = render partial: "public_keys", object: @user.public_keys
+
+  .row
+    .col-md-12
+      .box
+        = render partial: "permissions_table", object: @user
+
+  .row
+    .col-md-12
+      .box
+        .box-header.with-border
+          %h3.box-title Warnings
+        .box-body
+          #audit_warnings-table
+            = render partial: "audit_warnings_table", object: @user.audit_warnings
+
+  .row
+    .col-md-12
+      .box
+        .box-header.with-border
+          %h3.box-title Audit Events
+        .box-body
+          #audit_events-table
+            = render partial: "audit_events_table", object: @user.audit_events
+
+    .row
+    .col-md-12
+      .box
+        .box-header.with-border
+          %h3.box-title Activity
+        .box-body
+          #activity-graph.activity-graph-container
+
+:javascript
+  (function() {
+    var audit_events = #{raw @user.graph_audit_events(@user.audit_events(40))};
+    new conjur.ActivityGraph(
+      '#activity-graph',
+      {
+        sread: 'Successful reads',
+        fread: 'Failed reads',
+        supdate: 'Successful updates',
+        fupdate: 'Failed updates'
+      },
+      conjur.getActivityData(audit_events[1].map(item => item.conjur_audit))
+    );
+  })();

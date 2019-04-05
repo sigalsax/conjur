@@ -1,0 +1,7 @@
+.horizontal-bar-chart
+  - data.entries.each do |row|
+    .row
+      .label{style: inline_width(data.label_width)}= link_to_object("<account>:variable:" + row[:label])
+      .bar{style: inline_width(row[:width])}
+        .exact-value= row[:value]
+      .empty{style: inline_width(data.max_bar_width - row[:width])}

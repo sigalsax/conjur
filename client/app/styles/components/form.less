@@ -1,0 +1,173 @@
+.form-control {
+    .border-radius(@input-radius);
+    box-shadow: none;
+    border-color: @gray;
+    color: #555;
+
+    &:focus {
+        border-color: @primary-color;
+        box-shadow: none;
+    }
+
+    &::-moz-placeholder,
+    &:-ms-input-placeholder,
+    &::-webkit-input-placeholder {
+        color: #bbb;
+        opacity: 1;
+    }
+
+    &:not(select) {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+    }
+}
+
+.form-group {
+    &.has-success {
+        label {
+            color: @green;
+        }
+
+        .form-control {
+            border-color: @green;
+            box-shadow: none;
+        }
+
+        .icon-form-valid:before {
+            &:extend(.icon-ok:before);
+        }
+    }
+
+    &.has-error {
+        label {
+            color: @red;
+        }
+
+        .form-control {
+            border-color: @red;
+            box-shadow: none;
+        }
+
+        .icon-form-valid:before {
+            &:extend(.icon-cancel:before);
+        }
+    }
+}
+
+/* Input group */
+.input-group {
+    .input-group-addon {
+        .border-radius(@input-radius);
+        border-color: @gray;
+        background-color: #fff;
+    }
+}
+
+/* button groups */
+.btn-group-vertical {
+    .btn {
+        &.btn-flat:first-of-type,
+        &.btn-flat:last-of-type {
+            .border-radius(0);
+        }
+    }
+}
+
+/* support Font Awesome icons in form-control */
+.form-control-feedback.fa {
+    line-height: @input-height-base;
+}
+
+.input-lg + .form-control-feedback.fa,
+.input-group-lg + .form-control-feedback.fa,
+.form-group-lg .form-control + .form-control-feedback.fa {
+    line-height: @input-height-large;
+}
+
+.input-sm + .form-control-feedback.fa,
+.input-group-sm + .form-control-feedback.fa,
+.form-group-sm .form-control + .form-control-feedback.fa {
+    line-height: @input-height-small;
+}
+
+.input-cancel-btn {
+    position: absolute;
+    right: 17px;
+    top: 0;
+    bottom: 0;
+    height: 20px;
+    margin: auto;
+    font-size: 14px;
+    cursor: pointer;
+    color: @gray;
+
+    &:hover {
+        color: @primary-color;
+    }
+}
+
+.search-form {
+    .border-radius(3px);
+    border: 1px solid darken(@searchform-bg-color, 10%);
+    display: inline-block;
+    margin: 10px auto;
+
+    input:focus {
+        border-color: transparent;
+        background-color: @searchform-bg-color-contrast;
+    }
+
+    input[type="text"], .btn {
+        box-shadow: none;
+        background-color: lighten(@searchform-bg-color, 10%);
+        border: 1px solid transparent;
+        height: 35px;
+        outline: none;
+        .transition(all @transition-speed @transition-fn);
+    }
+
+    input[type="text"] {
+        color: @searchform-input-color;
+        .border-radius(2px, 0, 2px, 0);
+
+        &:focus,
+        &:focus + .input-group-btn .btn {
+            background-color: @searchform-bg-color-contrast;
+            color: @searchform-input-color;
+        }
+
+        &:focus + .input-group-btn .btn {
+            border-left-color: @searchform-bg-color-contrast;
+        }
+    }
+
+    .btn {
+        color: #999;
+        .border-radius(0, 2px, 0, 2px);
+    }
+}
+
+.search-results-label {
+    color: #999;
+    font-style: italic;
+    margin-top: 15px;
+}
+
+.search-resources {
+  width: 200px;
+}
+
+
+.ui-autocomplete {
+  z-index:1100;
+}
+
+.ui-autocomplete > * {
+  font-size: 16px;
+  padding: 5px 10px;
+}
+
+.add-button {
+  margin-bottom: 10px;
+}

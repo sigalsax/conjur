@@ -1,0 +1,25 @@
+.login-box
+  .login-logo
+    %span.logo
+  .box.box-primary
+    .box-header.with-border
+      %h3.box-title Sign in
+    .box-body
+      %p.help-block
+        - if notice
+          %span= notice
+        - else
+          %span= ENV['UI_CONJUR_URL']
+
+      = form_for :login,  url: login_index_path do |form|
+        %div
+          .form-group.has-feedback
+            = form.text_field :username, placeholder: "Username", class: "form-control", autocomplete: :off
+            %span.form-control-feedback.icon-user.icon-login
+
+          .form-group.has-feedback
+            = form.password_field :password, placeholder: "Password", class: "form-control", autocomplete: :off
+            %span.form-control-feedback.icon-lock.icon-login
+
+          .pull-right
+            = submit_tag "Sign In", class: "btn btn-primary btn-flat"

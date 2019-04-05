@@ -1,0 +1,59 @@
+%section.content-header.content-header-resource
+  %h1{title: @host.id}
+    %i.icon-host= @host.id
+  %ol.breadcrumb
+    - if owner_is_policy? @host
+      %li= link_to_object @host.owner
+      %li.active= policy_unqualified_id @host
+    - else
+      %li= link_to 'Hosts', hosts_path
+      %li.active{title: @host.id}= @host.id
+
+%section.content
+  = render partial: "resource_details", object: @host
+
+  .row
+    .col-md-12
+      .box
+        = render partial: "role_graph", object: @host.role_graph
+
+  .row
+    .col-md-12
+      .box
+        .box-header.with-border
+          %h3.box-title SSH Access
+        .box-body
+          #host_ssh-table
+            = render partial: "ssh", object: @host.ssh(limit: 11)
+
+  .row
+    .col-md-12
+      .box
+        .box-header.with-border
+          %h3.box-title Permissions
+        .box-body
+          %h4.box-title Layer Memberships
+          #layer-memberships-table
+            = render partial: "layers_memberships_table", object: @host.layer_memberships
+          %hr
+          %h4.box-title Privileges Held
+          #privileges-table
+            = render partial: "privileges_table", object: @host.permissions
+
+  .row
+    .col-md-12
+      .box
+        .box-header.with-border
+          %h3.box-title Warnings
+        .box-body
+          #audit_warnings-table
+            = render partial: "audit_warnings_table", object: @host.audit_warnings
+
+  .row
+    .col-md-12
+      .box
+        .box-header.with-border
+          %h3.box-title Audit Events
+        .box-body
+          #audit_events-table
+            = render partial: "audit_events_table", object: @host.audit_events

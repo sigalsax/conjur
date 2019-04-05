@@ -1,0 +1,53 @@
+%section.content-header.dashboard-header
+  = react_component("LittleDudes", prerender: false, props: {data: @resources_stats, currentUser: @current_user, v5: Conjur.v5? })
+
+  // Do not display the Activity and Most Active Secrets charts for V5
+  - unless Conjur.v5?
+    = render partial: 'activity_charts'
+
+%section.content
+
+  .row
+    .col-md-12
+      .box
+        .box-header.with-border
+          %h3.box-title Warnings
+        .box-body
+          #dashboard-warnings-table
+            = render_async dashboard_audit_warnings_path do
+              Please wait…
+
+  .row
+    .col-md-12
+      .box
+        .box-header.with-border
+          %h3.box-title Recent Permission Model Changes
+        .box-body
+          #dashboard-changes-table
+            = render_async dashboard_audit_changes_path do
+              Please wait…
+
+  .row
+    .col-md-12
+      .box
+        .box-header.with-border
+          %h3.box-title Recent Activity
+        .box-body
+          #dashboard-activity-table
+            = render_async dashboard_audit_events_path do
+              Please wait…
+
+:javascript
+  $(document).ready(function() {
+    [ 'warnings', 'changes', 'activity'].forEach(function(kind) {
+      var elementId = "#dashboard-" + kind + "-table";
+      $(elementId).bind("ajax:success", function(e, data, status, xhr) {
+        $(elementId).html(xhr.responseText);
+      })
+    });
+  })
+
+  // something declares jQuery but doesn't define it and render_async uses it
+  jQuery = $
+
+=content_for :render_async

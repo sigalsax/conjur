@@ -1,0 +1,19 @@
+.box-header.with-border
+  %h3.box-title Public Keys
+.box-body#public-keys
+  .b-pubkeys
+  - if public_keys.present?
+    %p.b-pubkeys__help
+      This is list of SSH public keys associated with user #{@user.id}.
+    %ul.b-pubkeys__list
+    - public_keys.each do |key|
+      %li.b-pubkeys__item.list-group-item.list-group-item-noborder
+        %span
+          = key.type
+        %span
+          = key.name
+  - else
+    %p.b-pubkeys__help
+      There are no pubkeys registered for this user yet. Use following command to upload one from a file:
+    %pre
+      $ conjur pubkeys add #{@user.id} @userkeyfile.pub

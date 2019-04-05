@@ -1,0 +1,13 @@
+#ldap-sync
+  %section.content-header
+    %h1 LDAP Sync
+  %section.content
+    %div
+      .row
+        = render partial: 'connection_details_complete'
+      .row
+        %div
+          .col-lg-6
+            = render partial: 'selected_users_form'
+        - if @error_message
+          = render partial: 'selected_users_error'

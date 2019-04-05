@@ -1,0 +1,102 @@
+#ldap-sync
+  %section.content-header
+    %h1 LDAP Sync
+  %section.content
+    %div
+      .row
+        .col-lg-6
+          .box.box-info
+            .box-header
+              %h3.box-title{id: 'connection-test-new'} 1. Connect to Your LDAP Server
+            %form.form-horizontal{action: ldap_connection_details_path, method: 'post'}
+              .box-body
+                %div
+                  = hidden_field_tag('_method', 'put')
+                  = hidden_field_tag(request_forgery_protection_token.to_s, form_authenticity_token)
+                  .form-group
+                    %label.col-sm-4.control-label.required Connection type
+                    .col-sm-7
+                      -# NOTE: You need to add the change event handler using JS -- not inline
+                      = select_tag('connect_type',
+                          options_for_select([['Unencrypted', 'plain'],
+                            ['SSL', 'ssl'],
+                            ['TLS', 'tls']],
+                            @connection_details.connect_type),
+                          id: 'connect_type', class: 'form-control', style: 'width: 100%')
+                    .col-sm-1.help-column
+                      %i.icon-info-circled.help-text
+                        %span.tooltip All traffic between Conjur and the Authentication Proxy is encrypted. This setting controls how the communication between the Directory Server and the Authentication Proxy is encrypted.
+                  .form-group{style: @connection_details.secure? ? '' : 'display:none;', id: "tls_cert"}
+                    %label.col-sm-4.control-label.required
+                      %span{id: 'certificate_description'}
+                      %span certificate
+                    .col-sm-7
+                      = text_area_tag('tls_cert', @connection_details.tls_cert)
+                      .error_container.invisible
+                        %span Field is required
+                    .col-sm-1.help-column
+                      %i.icon-help-circled-alt.help-text
+                        %span.tooltip SSL and TLS connections require a certificate. Paste the contents of your CA certificate PEM file here.
+                .form-group
+                  %label.col-sm-4.control-label.required Server &amp; port
+                  .col-sm-7
+                    .row
+                      .col-sm-6.col-lg-7
+                        = text_field_tag('host', @connection_details.host, class: 'form-control')
+                      .col-sm-6.col-lg-5
+                        = text_field_tag('port', @connection_details.port || 389, class: 'form-control')
+                    .error_container.invisible
+                      %span Field is required
+                  .col-sm-1.help-column
+                    %i.icon-info-circled.help-text
+                      %span.tooltip Hostname or IP and port of directory domain controller.
+                .form-group
+                  %label.col-sm-4.control-label.required Base DN
+                  .col-sm-7
+                    = text_field_tag('base_dn', @connection_details.base_dn, class: 'form-control')
+                    .error_container.invisible
+                      %span Field is required
+                  .col-sm-1.help-column
+                    %i.icon-info-circled.help-text
+                      %span.tooltip Specify OU or container containing the users and groups to sync.
+                .form-group
+                  %label.col-sm-4.control-label.required Bind DN
+                  .col-sm-7
+                    = text_field_tag('bind_dn', @connection_details.bind_dn, class: 'form-control')
+                    .error_container.invisible
+                      %span Field is required
+                  .col-sm-1.help-column
+                    %i.icon-info-circled.help-text
+                      %span.tooltip Bind DN for the LDAP user to use for the sync.
+                .form-group
+                  %label.col-sm-4.control-label.required Search password
+                  .col-sm-7
+                    = password_field_tag('bind_password', '', class: 'form-control')
+                    .error_container.invisible
+                      %span Field is required
+                  .col-sm-1.help-column
+                    %i.icon-info-circled.help-text
+                      %span.tooltip Bind password to use for the sync.
+                .btn-toolbar{:role => "toolbar"}
+                  %button.btn.btn-primary{:type => "submit"} Connect
+        - if @error_message
+          = render partial: 'error'
+
+:javascript
+
+  document.getElementById('connect_type').addEventListener('change',
+    function connectTypeHandler(e) {
+      const elm = id => document.getElementById(id)
+
+      const connectType = e.target.value
+      const certContainer = elm('tls_cert')
+      const certTextArea = document.querySelector('#tls_cert textarea')
+      const certDescription = elm('certificate_description')
+      const isVisible = connectType !== 'plain'
+
+      certContainer.style.display = isVisible ? 'block' : 'none'
+      certTextArea.value = isVisible ? certTextArea.value : ''
+      certDescription.innerText = connectType === 'ssl' ? 'SSL' :
+                                  connectType === 'tls' ? 'TLS' : ''
+    }
+  )

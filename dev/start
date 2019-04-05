@@ -82,6 +82,7 @@ export CONJUR_DATA_KEY="$(cat data_key)"
 
 services="pg conjur"
 docker-compose up -d --no-deps $services
+docker-compose exec conjur bundle update
 docker-compose exec conjur bundle
 docker-compose exec conjur conjurctl db migrate
 docker-compose exec conjur conjurctl account create cucumber || true

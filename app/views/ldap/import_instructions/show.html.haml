@@ -1,0 +1,13 @@
+#ldap-sync
+  %section.content-header
+    %h1 LDAP Sync
+  %section.content
+    %div
+      .row
+        = render partial: 'ldap/selected_users/connection_details_complete'
+      .row
+        = render partial: 'selected_users_complete'
+      .row
+        = render partial: 'saved_users_complete'
+      .row
+        = render partial: 'import_instructions'

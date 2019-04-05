@@ -1,0 +1,9 @@
+- placeholder_label ||= ''
+- placeholder = "Search #{(placeholder_label).pluralize.titleize} ..."
+
+= form_tag path, remote: true, class: 'search-form' do
+  .input-group
+    %input.form-control.search-input{type: 'text', name: 'search', placeholder: placeholder, value: @search}
+    %span.input-group-btn
+      %button.btn.btn-flat{type: 'submit', value: 'Search'}
+        %i.icon-search

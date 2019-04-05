@@ -1,0 +1,9 @@
+.col-lg-6
+  .box.box-dark
+    .box-header.with-border
+      %h3.box-title{id: 'connection-test-error'} LDAP Connection Results
+    .box-body
+      .alert.alert-warning
+        %h4 Failed To Connect To Server
+        %div
+          %div= @error_message

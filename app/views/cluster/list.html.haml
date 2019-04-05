@@ -1,0 +1,43 @@
+%section.content-header
+  %h1 Conjur Cluster
+
+%section.content
+  .row
+    .col-md-12
+      .box
+        .box-header.with-border
+          %h3.box-title Cluster Health Status
+        .box-body
+
+          %table.table.table-bordered.table-hover
+            %thead
+              %tr
+                %th.col-md-2 Host IP
+                %th.col-md-2 Role
+                %th.col-md-2 Services
+                %th.col-md-2 Database
+                %th.col-md-2 Replication Status
+                %th.col-md-2 Free Space
+            %tbody
+              %tr
+                %td= @health[:hostname]
+                %td= @health[:role].titleize
+                %td= display_light( @health[:services_label], @health[:services_color] )
+                %td= display_light( @health[:database_label], @health[:database_color] )
+                %td= display_light( @health[:replication][:label], @health[:replication][:color], @health[:replication][:tooltip] )
+                %td= display_light( @health[:freespace][:label], @health[:freespace][:color], @health[:freespace][:tooltip] )
+
+              - if !@health[:nodes].nil?
+                - @health[:nodes].each do |node|
+                  %tr
+                    %td= node[:ip_address]
+                    %td= node[:role].titleize
+                    %td= display_light( node[:services_label], node[:services_color] )
+                    %td= display_light( node[:database_label], node[:database_color] )
+                    %td= display_light( node[:replication][:label], node[:replication][:color], node[:replication][:tooltip] )
+                    %td= display_light( node[:freespace][:label], node[:freespace][:color], node[:freespace][:tooltip] )
+
+        .box-footer
+          %p
+            %b Conjur version on this node (#{@health[:role]}):
+            #{@health[:version]}

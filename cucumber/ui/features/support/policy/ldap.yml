@@ -1,0 +1,19 @@
+- !resource
+  kind: configuration
+  id: conjur/ldap-sync/default
+  owner: !host conjur/ldap-sync
+  annotations:
+    ldap-sync/group_filter: <DELETED>
+    ldap-sync/port: <DELETED>
+    ldap-sync/import-uid-numbers: <DELETED>
+    ldap-sync/host: <DELETED>
+    ldap-sync/group-attribute-mapping/name: <DELETED>
+    ldap-sync/user-filter: <DELETED>
+    ldap-sync/bind-dn: <DELETED>
+    ldap-sync/connect-type: <DELETED>
+    ldap-sync/import-public-keys: <DELETED>
+    ldap-sync/import-gid-numbers: <DELETED>
+    ldap-sync/user-attribute-mapping/name: <DELETED>
+    ldap-sync/base-dn: <DELETED>
+    ldap-sync/group-filter: <DELETED>
+    ldap-sync/import_uid_numbers: <DELETED>

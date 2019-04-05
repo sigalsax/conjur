@@ -1,0 +1,41 @@
+%body
+  %header.main-header
+    %a.logo.active{:href => "/ui/"}
+      %span.logo-lg Conjur
+      %span.logo-mini Conjur
+    %nav.navbar.navbar-static-top{:role => "navigation"}
+      %a.sidebar-toggle{:href => "#", :role => "button"}
+        %i.fa.fa-angle-double-right
+      .navbar-custom-menu
+        %ul.nav.navbar-nav
+          %li
+            - if session[:conjur_username] == "admin"
+              %a
+                %i.icon-user
+                %span= session[:conjur_username]
+            - else
+              %a{:href => "/ui/users/#{session[:conjur_username]}/"}
+                %i.icon-user
+                %span= session[:conjur_username]
+          %li
+            = link_to "Sign Out", logout_path, :method => :delete
+        %ul.nav.navbar-nav
+          %li.dropdown.user-menu.no-caret.dropdown
+            %a.dropdown-toggle{:href => "#", :role => "button", :type => "button", :data => { "toggle" => "dropdown"} }
+              %span
+                %i.icon-cog
+              %span
+              %span.caret
+            %ul.dropdown-menu{:role => "menu"}
+              %li
+                %a{:href => edit_ldap_connection_details_path} LDAP Sync
+              %li
+                %a{:href => "/ui/cluster/"} Conjur Cluster
+
+  .stent
+
+  :javascript
+    var arrowBox = document.querySelector(".sidebar-toggle");
+    arrowBox.addEventListener("click", function () {
+      arrowBox.classList.toggle("arrow-rotate");
+    });

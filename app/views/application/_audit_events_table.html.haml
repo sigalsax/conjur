@@ -1,0 +1,24 @@
+- count, audit_events = audit_events_table
+- if count == 0
+  %p
+    This role doesn't have any audit events
+- elsif count == :forbidden
+  %p.forbidden
+    You do not have permission to view the audit events of this role.
+
+- if count.is_a?(Integer) && count > 0
+
+  = render partial: "audit_table", object: audit_events
+
+  - obtained = @requested || audit_events.size
+  .text-center
+    .btn-group
+      - if obtained > 10
+        - ceiling = ((obtained - 10)/10.0).ceil * 10 # Round up to the next 10 multiple ex. 11 => 20
+        = audit_events_link_to(@conjur_object, ceiling) do
+          %button.btn.btn-default
+            Show Less
+      - if obtained < count
+        = audit_events_link_to(@conjur_object, audit_events.size + 10) do
+          %button.btn.btn-default
+            Show More

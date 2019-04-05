@@ -1,0 +1,54 @@
+.login-logo {
+    background-image: url('../../images/conjur_vert_1c_ko.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: block;
+    width: 300px;
+    height: 98px;
+    margin: 0 auto 2em auto;
+}
+
+.box.box-primary {
+    border-top-color: #3c8dbc;
+    padding: 1em;
+}
+
+.login-box {
+    width: 360px;
+    margin: 0 0 128px 0;
+
+    @media (max-width: @screen-sm) {
+        width: 90%;
+        margin-top: 20px;
+    }
+}
+
+.login-box-body {
+    background: #fff;
+    padding: 20px;
+    padding-top: 0px;
+    color: #666;
+
+    .form-control-feedback {
+        color: #777;
+    }
+}
+
+.login-box-msg {
+    margin: 0;
+    text-align: center;
+    padding: 0 20px 20px 20px;
+}
+
+.social-auth-links {
+    margin: 10px 0;
+}
+
+
+.icon-login {
+    &.icon-user,
+    &.icon-lock {
+        color: @black;
+    }
+}

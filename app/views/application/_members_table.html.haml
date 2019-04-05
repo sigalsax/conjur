@@ -1,0 +1,50 @@
+- count, members = members_table
+
+- if count == 0 && @search.blank? && !editable
+  %p
+    This role doesn't have any members.
+- elsif count == :forbidden
+  %p.forbidden
+    You do not have permission to view the members of this role.
+- else
+  .row
+    .col-xs-10
+      - if count > 0 || @search.present?
+        .row
+          .col-xs-6.col-md-4
+            = render partial: "role_search_form", locals: { path: list_members_path(role: @conjur_role.roleid, id: nil), placeholder_label: "member" }
+          .col-xs-6.col-md-8.search-results-label
+            = relationship_count_label count, 'member'
+    .col-xs-2
+      .add-member.pull-right
+        - if local_assigns.fetch(:editable, false)
+          %button.btn.btn-default{:'data-toggle' => 'modal', :'data-target' => '#add-user-modal'}
+            %i.fa.fa-plus
+            Add Member
+
+- if count.is_a?(Integer) && count > 0
+  %table.table.table-bordered.table-hover
+    %thead
+      %tr
+        %th Name
+        %th Options
+        - if local_assigns.fetch(:editable, false)
+          %th Manage
+    %tbody
+      - members.each do |member|
+        %tr
+          %td= link_to_object member.member
+          %td
+            - if member.admin
+              admin
+          - if local_assigns.fetch(:editable, false)
+            %td.lastColumn
+              = remove_button(container, member.member, 'members')
+
+  - obtained = @requested || members.size
+  - if obtained < count
+    .text-center
+      = link_to(list_members_path(role: @conjur_role.roleid, limit: members.size + 10, search: @search),
+        remote: true) do
+        %button.btn.btn-default
+          Show More

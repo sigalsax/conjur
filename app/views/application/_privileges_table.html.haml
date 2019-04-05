@@ -1,0 +1,41 @@
+- count, permissions = privileges_table
+
+- if count == 0 && @search.blank?
+  %p
+    This object doesn't have any privileges
+- elsif count == :forbidden
+  %p.forbidden
+    You do not have permission to view this role's privileges.
+- else
+  .row
+    .col-xs-6.col-md-4
+      = render partial: "role_search_form", locals: { path: list_privileges_path(role: @conjur_role.roleid, id: nil), placeholder_label: "resource"}
+    .col-xs-6.col-md-8.search-results-label
+      = relationship_count_label count, 'resource', prefix: 'permissions on '
+
+- if count.is_a?(Integer) && count > 0
+  %table.table.table-bordered.table-hover
+    %thead
+      %tr
+        %th Role
+        %th Privileges
+        %th Resource
+    %tbody
+      - permissions.each do |permission|
+        %tr
+          %td
+            = link_to_object permission.role
+          %td
+            - if permission.owner
+              %strong owner
+            - else
+              = permission.privileges.sort.join(', ')
+          %td
+            = link_to_object permission.resource
+
+  - obtained = @requested || permissions.size
+  - if obtained < count
+    .text-center
+      = link_to(list_privileges_path(role: @conjur_role.roleid, limit: permissions.size + 10, search: @search), remote: true) do
+        %button.btn.btn-default
+          Show More

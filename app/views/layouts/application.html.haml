@@ -1,0 +1,34 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %title Conjur UI
+
+    -# Don't add references to JavaScript files/URLs here. They need
+    -# to get packaged into the webpack bundle by adding them to
+    -# package.json.
+
+    = javascript_include_tag 'webpack-bundle'
+    = stylesheet_link_tag 'webpack-bundle'
+    = csrf_meta_tags
+    = favicon_link_tag
+    %script{:type => "application/javascript"}
+      localStorage.removeItem('conjur');
+  %body.pace-done
+    #wrapper
+      #sidebar.sidebar-open
+        .wrapper
+          = render "shared/header"
+          = render "shared/menu"
+        .content-wrapper
+          = yield
+
+    :javascript
+      $(document).ready(function() {
+        [ 'members', 'memberships', 'privileges', 'host_ssh', 'audit_events', 'audit_warnings', 'audit_updates', 'tokens' ].forEach(function(kind) {
+          var elementId = "#" + kind + "-table";
+          $(elementId).bind("ajax:success", function(e, data, status, xhr) {
+            $(elementId).html(xhr.responseText);
+          })
+        });
+      })

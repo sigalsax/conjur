@@ -1,0 +1,42 @@
+- !policy
+  id: frontend/v1
+  annotations:
+    description: Manages permissions within the front end web application
+  body:
+    - &ssl
+      - !variable
+        id: ssl/private_key
+        mime_type: application/x-pem-file
+        annotations:
+          description: Private key for communication over SSL
+
+      - !variable
+        id: ssl/certificate
+        mime_type: application/x-x509-ca-cert
+        annotations:
+          description: Certificate that needs to be rotated
+
+    - !group
+      id: certificate-managers
+      annotations:
+        description: Members are able to manage the SSL certificate and key.
+        editable: "true"
+
+    - !layer
+      annotations:
+        description: Hosts in this layer can fetch all 'frontend/v1' variables
+        puppet: "true"
+        editable: "true"
+
+    - !host-factory
+      layers: [ !layer ]
+
+    - !permit
+      role: !group certificate-managers
+      privilege: [ read, execute, update ]
+      resource: *ssl
+
+    - !permit
+      role: !layer
+      privilege: [ read, execute ]
+      resource: *ssl

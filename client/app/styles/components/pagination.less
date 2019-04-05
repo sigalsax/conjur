@@ -1,0 +1,36 @@
+.pagination {
+  text-align: center;
+  padding: 34px 0;
+
+  .showing {
+    line-height: 32px;
+    font-style: italic;
+  }
+
+  .pagination-inner {
+    margin: 0 auto;
+
+    a {
+      display: inline-block;
+      border: 1px solid @dark-box-border-color;
+      border-radius: @btn-border-radius;
+      padding: 0 14px 0 14px;
+      line-height: 32px;
+      text-align: center;
+      margin: 0 2px;
+      color: @font-color-normal;
+
+      &.current {
+        background-color: @dark-box-border-color;
+      }
+
+      &.arrow {
+        border: none;
+
+        i {
+          color: @dark-box-border-color;
+        }
+      }
+    }
+  }
+}

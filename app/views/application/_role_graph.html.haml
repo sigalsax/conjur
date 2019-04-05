@@ -1,0 +1,14 @@
+.box-header.with-border
+  %h3.box-title Role graph
+.box-body#role-graph
+  - if role_graph[:forbidden]
+    %p.forbidden
+      You do not have permission to view the role graph.
+  - else
+    %svg#role-graph-canvas
+
+    :javascript
+      (function() {
+        var graph = #{raw role_graph.to_json};
+        conjur.createRoleGraph(graph, '#role-graph-canvas');
+      })();

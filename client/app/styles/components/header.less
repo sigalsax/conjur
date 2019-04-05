@@ -1,0 +1,193 @@
+@import "../variables.less";
+
+.sidebar-collapse {
+    .stent {
+        height: @navbar-height;
+    }
+    .main-header {
+        position: fixed;
+        width: 100%;
+    }
+}
+
+
+
+.main-header {
+    position: fixed;
+    width: 100%;
+    max-height: 100px;
+    z-index: 1030;
+
+    // Logo bar
+    .logo {
+        .transition(width @transition-speed @transition-fn);
+
+        display: block;
+        float: left;
+        min-height: @navbar-height;
+        line-height: @navbar-height;
+        text-align: center;
+        width: @sidebar-width;
+        padding: 0;
+        overflow: hidden;
+        color: transparent;
+        position: fixed;
+        background-color: @sidebar-bg-color; //@header-logo-bg-color;
+        border-bottom: 0 solid transparent;
+        transition: all 0.4s;
+
+        // Allow to create 2 logo designs
+        // First should be visibile when sidebar isn't collapsed
+        span {
+            width: 75%;
+            height: 50%;
+            overflow: hidden;
+            margin: auto;
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+
+            &.logo-lg {
+                display: block;
+                background-image: url('../../images/conjur_4c_ko.svg');
+                background-size: contain;
+                background-repeat: no-repeat;
+                background-position: center;
+                margin: 13px auto 0 auto;
+            }
+
+            &.logo-mini {
+                display: none;
+                background-image: url('../../images/conjur_4c_ko.svg');
+                background-size: contain;
+                background-repeat: no-repeat;
+                max-width: 75px;
+                max-height: 27px;
+            }
+        }
+    }
+
+    // Navbar
+    > .navbar {
+        .transition(margin-left @transition-speed @transition-fn);
+        // .navbar-variant(@header-bg-color; #fff);
+
+        background-color: @header-bg-color;
+        margin-bottom: 0;
+        margin-left: @sidebar-width;
+        border: none;
+        min-height: @navbar-height;
+        border-radius: 0;
+
+        .layout-top-nav & {
+            margin-left: 0;
+        }
+
+        // Navbar links
+        .nav > li > a {
+            color: #fff;
+            transition: all 0.4s;
+
+            &:hover {
+                background-color: @sidebar-dark-hover-bg;
+            }
+        }
+
+        .nav > li > a:hover,
+        .nav > li > a:active,
+        .nav > li > a:focus,
+        .nav .open > a,
+        .nav .open > a:hover,
+        .nav .open > a:focus {
+            background-color: @sidebar-dark-hover-bg;
+        }
+    }
+
+    // Navbar custom menu
+    .navbar-custom-menu {
+        float: right;
+
+        @media (max-width: @screen-sm-max) {
+            a {
+                color: inherit;
+                background: transparent;
+            }
+        }
+    }
+
+    // Toggle button
+    .sidebar-toggle {
+        float: left;
+        padding: @navbar-padding-vertical @navbar-padding-horizontal;
+        color: #fff;
+        transition: all 0.4s;
+
+        &:hover {
+            // background-color: @sidebar-dark-hover-bg;
+        }
+
+        &:focus, &:active {
+            background: transparent;
+        }
+    }
+}
+
+// Control navbar scaffolding on x-small screens
+@media (max-width: @screen-sm-max) {
+    .navbar-custom-menu .navbar-nav > li {
+        float: left;
+    }
+
+    // Dont't let links get full width
+    .navbar-custom-menu .navbar-nav {
+        margin: 0;
+        float: left;
+    }
+
+    .navbar-custom-menu .navbar-nav > li > a {
+        padding-top: 15px;
+        padding-bottom: 15px;
+        line-height: 20px;
+    }
+}
+
+// Collapse header
+@media (max-width: @screen-header-collapse) {
+
+    .sidebar-collapse {
+        .stent {
+            height: 112px;
+        }
+    }
+    .main-header {
+        position: relative;
+
+        .logo, .navbar {
+            width: 100%;
+            float: none;
+            position: relative;
+        }
+
+        .navbar {
+            margin: 0;
+
+            .dropdown-menu {
+                li {
+                    &.divider {
+                        background-color: rgba(255, 255, 255, 0.1);
+                    }
+
+                    a {
+                        color: #fff;
+                    }
+                }
+            }
+        }
+
+        .navbar-custom-menu {
+            float: right;
+        }
+    }
+}

@@ -1,0 +1,21 @@
+- permissions = layer_ssh
+
+- if permissions.inject(0){|count,entry| count += entry[1].size; count} == 0
+  %p
+    There is no SSH access to this layer.
+- else
+  %table.table.table-bordered.table-hover
+    %thead
+      %tr
+        %th Name
+        %th Admin
+    %tbody
+      - permissions[:admins].each do |role|
+        %tr
+          %td= link_to_object role
+          %td yes
+
+      - permissions[:users].each do |role|
+        %tr
+          %td= link_to_object role
+          %td

@@ -1,0 +1,24 @@
+#add-host-modal.modal{role: 'dialog'}
+  .modal-dialog{role: 'document'}
+    .modal-content
+      = form_tag(role_members_path(role_id), method: 'post') do
+        = hidden_field_tag(:scroll_to, 'hosts')
+        .modal-header
+          %h3 Add Host to <span class='icon icon-layer'>#{layer_id}
+        .modal-body
+          .row.rowMargin-medium
+            .col-md-12
+              = text_field_tag('member_id', '', class: 'form-control js-hosts-autocomplete')
+        .modal-footer
+          .pull-left
+            %input.btn.btn-primary.js-add-member-btn{type: "submit", value: 'Add', disabled: true}
+            %button.btn.btn-link.btn-muted{:'data-dismiss' => 'modal'}Cancel
+
+:javascript
+  $( document ).ready(function(){
+    conjur.autoComplete('.js-hosts-autocomplete', #{raw selectable_members.to_json});
+
+    if (#{flash[:notice].present?}) {
+      conjur.scrollTo('#{flash[:scroll_to]}');
+    }
+  });

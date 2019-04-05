@@ -1,0 +1,46 @@
+- groups = @selected_users.groups
+- users = @selected_users.users
+
+.col-lg-6
+  .box.box-dark
+    .box-header.with-border
+      %h3.box-title{id: 'selected-users-preview'} LDAP Users Selected
+    .box-body
+      %div
+        .rounded-box
+          %i.icon-group
+            %span.search-header= groups.size
+            %span Groups
+        %ul.group-results-list
+          - groups.each_with_index do |group, i|
+            %li{class: i > 9 ? 'not-shown' : ''}= group.name
+          - if groups.size > 10
+            %p
+              %a{href: "#", onclick: 'showAllGroups(event)', id: 'show-all-groups'}
+                = "Show all #{groups.size} groups"
+        .rounded-box
+          %i.icon-user
+            %span.search-header= users.size
+            %span Users
+        %ul.user-results-list{:style => "list-style-type:none;"}
+          - users.each_with_index do |user, i|
+            %li{class: i > 9 ? 'not-shown' : ''}= user.name
+          - if users.size > 10
+            %p
+              %a{href: "#", onclick: 'showAllUsers(event)', id: 'show-all-users'}
+                = "Show all #{users.size} users"
+
+:javascript
+
+  const showAllGroups = mkShowAll('group')
+  const showAllUsers = mkShowAll('user')
+
+  function mkShowAll(list) {
+    return e => {
+      e.preventDefault() // prevent scroll to top
+      document.querySelectorAll(`.${list}-results-list li`).forEach(li =>
+        li.classList.remove('not-shown')
+      )
+      document.getElementById(`show-all-${list}s`).style.display = 'none'
+    }
+  }

@@ -1,0 +1,8 @@
+- !policy 
+  id: salt/v1
+  annotations:
+    description: Manages permissions for the Salt master
+  body:
+    - !layer
+      annotations:
+        description: Reserved for the Salt master

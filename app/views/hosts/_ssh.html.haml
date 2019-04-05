@@ -1,0 +1,35 @@
+- permissions = ssh
+- if permissions.size == 0
+  %p
+    There are no users with SSH access to this host.
+- else
+  %table.table.table-bordered.table-hover
+    %thead
+      %tr
+        %th Name
+        %th Admin
+    %tbody
+      - permissions.each_with_index do |permission, counter|
+        - next if counter == permission.length - 1
+        %tr
+          %td
+            = link_to_object permission.role
+          %td
+            = permission.privileges.member?('update') ? 'yes' : ''
+
+  - if @requested.nil? || @requested == permissions.size
+    .text-center
+      .btn-group
+        - if permissions.length > 11
+          - ceiling = (((permissions.length - 1) - 10)/10.0).ceil * 10 # Round up to the next 10 multiple ex. 11 => 20
+          = link_to(ssh_host_path(role: @conjur_role.roleid, limit: ceiling + 1, search: @search),
+            remote: true) do
+            %button.btn.btn-default
+              Show Less
+
+        -# retrieve one more record (11, 21, 31, ...) so we know if there are more records to retrieve
+        - if permissions.length > 10 && permissions.length % 10 == 1
+          = link_to(ssh_host_path(role: @conjur_role.roleid, limit: permissions.size + 10, search: @search),
+            remote: true) do
+            %button.btn.btn-default
+              Show More

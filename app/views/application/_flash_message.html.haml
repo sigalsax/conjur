@@ -1,0 +1,6 @@
+- if flash[:notice]
+  .alert.alert-success.alert-dismissible
+    %button.close{:'data-dismiss' => 'alert', :'aria-label' => 'Close'}
+      %span{:'aria-hidden' => 'true'}
+        &times;
+    = flash[:notice]

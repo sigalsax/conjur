@@ -1,0 +1,31 @@
+- !policy 
+  id: user-database/v1
+  annotations:
+    description: A PostgreSQL database which stores user data.
+  body:
+    - &variables
+      - !variable
+        id: url
+      - !variable
+        id: username
+      - !variable
+        id: password
+        annotations:
+          expiration: P1D
+
+    - !layer
+      annotations:
+        description: Hosts which run the user-database replicated cluster.
+
+    - !group
+      id: secrets-users
+      annotations:
+        description: Members are able to fetch the value of all secrets within the policy
+        editable: "true"
+
+    - !permit
+      role: !group secrets-users
+      privilege:
+        - read
+        - execute 
+      resource: *variables

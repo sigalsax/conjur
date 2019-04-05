@@ -1,0 +1,34 @@
+- if tokens.nil?
+  %p
+    There are no host factories available
+-else
+  .row
+    .col-xs-10
+    .col-xs-2
+      .add-button.pull-right
+        = link_to(add_token_layer_path(@layer.id), class: "btn btn-default", remote: true) do
+          %i.fa.fa-plus
+          New Token
+
+  - if tokens.length == 0
+    %p
+      There are no tokens in this layer.
+  - else
+    .row
+      %table.table.table-bordered.table-hover
+        %thead
+          %tr
+            %th API Key
+            %th Expiration
+            %th IP Restriction
+            %th Manage
+        %tbody
+          - tokens.each do |token|
+            %tr
+              %td= token.token
+              %td= token.expiration.to_s(:full_datetime_with_seconds)
+              %td= token.cidr.present? ? token.cidr.join(', ') : 'None'
+              %td
+                = link_to(layer_tokens_path(@layer.id, token_value: token.token,), method: :delete, class: "btn btn-listItem btn-xs", remote: true) do
+                  %i.glyphicon.glyphicon-minus-sign
+                  Remove

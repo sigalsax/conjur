@@ -1,0 +1,8 @@
+.box.box-info
+  .box-header
+    %h3.box-title{id: 'save-selected-users-title'} 3. Save Selected Users for Import
+    %form.form-horizontal{action: ldap_saved_users_path, method: 'post', name: 'savedUsersForm'}
+      = hidden_field_tag(request_forgery_protection_token.to_s, form_authenticity_token)
+      = hidden_field_tag('_method', 'put')
+      %button.btn.btn-primary{:type => "submit"} Save Selected Users
+      %p{style: 'margin-top: 10px;'} NOTE: Clicking this button will not cause users to be imported to Conjur.  It only saves them.  Instructions for the import itself will be given in the next step.

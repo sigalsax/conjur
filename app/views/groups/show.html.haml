@@ -1,0 +1,48 @@
+%section.content-header.content-header-resource
+  %h1{title: @group.id}
+    %i.icon-group= @group.id
+  %ol.breadcrumb
+    - if owner_is_policy? @group
+      %li= link_to_object @group.owner
+      %li.active= policy_unqualified_id @group
+    - else
+      %li= link_to 'Groups', groups_path
+      %li.active{title: @group.id}= @group.id
+
+%section.content
+  = render partial: "resource_details", object: @group
+
+  .row
+    .col-md-12
+      .box
+        = render partial: "role_graph", object: @group.role_graph
+
+  %a.js-scroll-to{name: "members"}
+  .row
+    .col-md-12
+      .box
+        .box-header.with-border
+          %h3.box-title
+            Members
+          = render partial: 'flash_message'
+
+        .box-body
+          #members-table
+            = render partial: "members_table", object: @group.members, locals: { container: @group, editable: @editable }
+
+  .row
+    .col-md-12
+      .box
+        = render partial: "permissions_table", object: @group
+
+  .row
+    .col-md-12
+      .box
+        .box-header.with-border
+          %h3.box-title Audit Events
+        .box-body
+          = render partial: "audit_table", object: @group.audit_events[1]
+
+
+- if @editable
+  = render partial: 'add_member_modal', locals: { role_id: @group.roleid, resource_id: @group.id, selectable_members: @available_members }

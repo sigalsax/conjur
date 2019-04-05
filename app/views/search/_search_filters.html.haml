@@ -1,0 +1,6 @@
+.filter
+  %label
+    = f.check_box kind, checked: params["search"] ? params["search"][kind] == "1" : true
+    %div{class: "buttonize icon-#{kind}-color"}
+      %i{class: "icon-#{kind}"}
+      = label.present? ? f.label(kind, label) : f.label(kind)

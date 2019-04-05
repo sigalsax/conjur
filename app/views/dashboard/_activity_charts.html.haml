@@ -1,0 +1,13 @@
+.row
+  .col-md-6
+    = react_component("DashboardActivityGraph", prerender: false, props: {data: @dashboard_stats})
+  .col-md-6
+    .box
+      .box-header
+        %h3.box-title
+          %i.icon-variable
+          Most Active Secrets
+      .box-body
+        .row
+          .col-md-12
+            = render partial: 'horizontal_bar_chart', locals: {data: @most_active_secrets}

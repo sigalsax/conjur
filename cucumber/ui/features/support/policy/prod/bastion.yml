@@ -1,0 +1,8 @@
+- !policy 
+  id: bastion/v1
+  annotations:
+    description: Manages permissions within bastion servers
+  body:
+    - !layer
+      annotations:
+        description: Reserved for bastion hosts

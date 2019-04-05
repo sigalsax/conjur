@@ -1,0 +1,16 @@
+%table.table.table-bordered.table-hover
+  %thead
+    %tr
+      %th
+        Time
+        %span.caret
+      %th Resource
+      %th User
+      %th Action
+  %tbody
+    - events.each do |event|
+      %tr
+        %td= event.time
+        %td= resource_id_link(event.resource)
+        %td= resource_id_link(event.user)
+        %td= event.action

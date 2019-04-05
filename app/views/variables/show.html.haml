@@ -1,0 +1,113 @@
+%section.content-header.content-header-resource
+  %h1{title: @variable.id}
+    %i{:class => (@variable.with_rotator? ? "icon-variable-with-rotator" : "icon-variable")}= @variable.id
+  %ol.breadcrumb
+    %li= link_to 'Secrets', variables_path
+    %li.active{title: @variable.id}= @variable.id
+
+- if @variable.expired?
+  %section.content-alert#variable-expired-alert
+    .row
+      .col-md-12
+        .alert.alert-warning.alert-dismissable
+          %button.close
+            ×
+          %span
+            This secret has expired.
+  :javascript
+    (function() {
+      var removeAlert = function() {
+        var $target = $("#variable-expired-alert");
+        $target.slideUp('slow', function(){ $target.remove(); });
+      };
+      $("#variable-expired-alert .close").on("click", removeAlert);
+    })()
+
+%section.content
+  .row
+    .col-md-12
+      .box
+        .box-header.with-border
+          %h3.box-title Details
+        .box-body
+          %dl.dl-horizontal
+            %dt Owner
+            %dd= link_to_object @variable
+            %dt Created by
+            %dd= link_to_object @variable.owner
+            %dt MIME type
+            %dd= @variable.mime_type
+            %dt Kind
+            %dd= @variable.kind
+            %dt Versions
+            %dd= @variable.version_count
+            %dt Annotations
+            %dd
+              - if @variable.annotations.empty?
+                %span No annotations
+              - else
+                %ul.list-unstyled
+                  - @variable.annotations.sort.to_h.each do |name, value|
+                    %li
+                      %strong= name.to_s
+                      = value
+  .row
+    .col-md-12
+      = react_component("SecretManager", prerender: false, props: {fetchURL: value_variable_path(@variable.id), editURL: edit_variable_path(@variable.id), rotateURL: rotate_variable_path(@variable.id), hasRotator: @variable.with_rotator? || @expiration_enabled, expirationEnabled: @expiration_enabled })
+  .row
+    .col-md-12
+      .box
+        .box-header.with-border
+          %h3.box-title Resource Permissions
+        .box-body
+          = render partial: "permissions_on_table", object: @variable.permissions_on
+  .row
+    .col-md-12
+      .box
+        .box-header.with-border
+          %h3.box-title Updates
+        .box-body
+          #audit_updates-table
+            = render partial: "audit_updates_table", object: @variable.audit_updates
+  .row
+    .col-md-12
+      .box
+        .box-header.with-border
+          %h3.box-title Warnings
+        .box-body
+          #audit_warnings-table
+            = render partial: "audit_warnings_table", object: @variable.audit_warnings
+  .row
+    .col-md-12
+      .box
+        .box-header.with-border
+          %h3.box-title Audit Events
+        .box-body
+          #audit_events-table
+            = render partial: "audit_events_table", object: @variable.audit_events
+
+    .row
+    .col-md-12
+      .box
+        .box-header.with-border
+          %h3.box-title Secret Activity
+        .box-body
+          #activity-graph.activity-graph-container
+
+:javascript
+  (function() {
+    var audit_events = #{raw @variable.graph_audit_events(@variable.audit_events(-1))};
+    new conjur.ActivityGraph(
+      '#activity-graph',
+      {
+        sread: 'Successful reads',
+        fread: 'Failed reads',
+        supdate: 'Successful updates',
+        fupdate: 'Failed updates'
+      },
+      conjur.getActivityData(audit_events[1]
+      .map(function(item) {
+        return item.conjur_audit;
+      }))
+    );
+  })();

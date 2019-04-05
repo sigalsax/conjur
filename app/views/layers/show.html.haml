@@ -1,0 +1,65 @@
+%section.content-header.content-header-resource
+  %h1{title: @layer.id}
+    %i.icon-layer= @layer.id
+  %ol.breadcrumb
+    - if owner_is_policy? @layer
+      %li= link_to_object @layer.owner
+      %li.active= policy_unqualified_id @layer
+    - else
+      %li= link_to 'Layers', layers_path
+      %li.active{title: @layer.id}= @layer.id
+
+%section.content
+  = render partial: "resource_details", object: @layer
+
+  .row
+    .col-md-12
+      .box
+        = render partial: "role_graph", object: @layer.role_graph
+
+  .row
+    .col-md-12
+      .box
+        .box-header.with-border
+          %h3.box-title Host Factories
+
+        .box-body
+          #tokens-table
+            = render partial: "tokens", object: @layer.tokens
+
+  %a.js-scroll-to{name: "hosts"}
+  .row
+    .col-md-12
+      .box
+        .box-header.with-border
+          %h3.box-title Hosts
+          = render partial: 'flash_message'
+
+        .box-body
+          = render partial: "layer_hosts", object: @layer.hosts, locals: { container: @layer, editable: @editable}
+
+  .row
+    .col-md-12
+      .box
+        .box-header.with-border
+          %h3.box-title SSH Access
+
+        .box-body
+          = render partial: "layer_ssh", object: @layer.ssh
+
+  .row
+    .col-md-12
+      .box
+        = render partial: "permissions_table", object: @layer
+
+  .row
+    .col-md-12
+      .box
+        .box-header.with-border
+          %h3.box-title Audit Events
+        .box-body
+          #audit_events-table
+            = render partial: "audit_events_table", object: @layer.audit_events
+
+- if @editable
+  = render partial: 'add_host_modal', locals: { role_id: @layer.roleid, layer_id: @layer.id, selectable_members: @available_hosts }

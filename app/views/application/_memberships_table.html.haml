@@ -1,0 +1,40 @@
+- count, memberships = memberships_table
+- if count == 0 && @search.blank?
+  %p
+    This object doesn't belong to any groups.
+- elsif count == :forbidden
+  %p.forbidden
+    You do not have permission to view the memberships of this role.
+- else
+  .row
+    .col-xs-12
+      .row
+        .col-xs-6.col-md-4
+          = render partial: "role_search_form", locals: { path: list_memberships_path(role: @conjur_role.roleid, id: nil), placeholder_label: "group membership" }
+
+        .col-xs-6.col-md-8.search-results-label
+          = relationship_count_label count, 'group membership'
+
+- if count.is_a?(Integer) && count > 0
+  %table.table.table-bordered.table-hover
+    %thead
+      %tr
+        %th Name
+        %th Options
+    %tbody
+      - memberships.each do |member|
+        %tr
+          %td
+            = link_to_object member.role
+          %td
+            - if member.owner
+              owner
+            - elsif member.admin
+              admin
+
+  - obtained = @requested || memberships.size
+  - if obtained < count
+    .text-center
+      = link_to(list_memberships_path(role: @conjur_role.roleid, limit: memberships.size + 10, search: @search), remote: true) do
+        %button.btn.btn-default
+          Show More

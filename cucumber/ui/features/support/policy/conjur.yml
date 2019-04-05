@@ -1,0 +1,11 @@
+# These policies are now populated by PolicyLoader.load_all_policies
+
+- !policy
+  id: ci
+  owner: !group ci-admin
+  body: []
+
+- !policy
+  id: prod
+  owner: !group operations-admin
+  body: []

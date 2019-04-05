@@ -1,0 +1,111 @@
+---
+
+# All groups belong to "employees"
+
+- !grant
+#  replace: true
+  role: !group employees
+  members:
+  - !group ci
+  - !group field
+  - !group operations
+  - !group developers
+  - !group qa
+  - !group researchers
+  - !group dba
+  - !group analytics-team
+#  - !member
+#   role: !group security_admin
+#    admin: true
+
+# Set up "admin" relationships for teams
+
+- !grant
+  role: !group ci
+  member: !member 
+    role: !group ci-admin
+    admin: true
+  
+- !grant
+  role: !group field
+  member: !member 
+    role: !group field-admin
+    admin: true
+
+- !grant
+  role: !group operations
+  member: !member 
+    role: !group operations-admin
+    admin: true
+
+- !grant
+  role: !group qa
+  member: !member 
+    role: !group qa-admin
+    admin: true
+
+- !grant
+  role: !group researchers
+  member: !member 
+    role: !group researchers-admin
+    admin: true
+
+- !grant
+  role: !group prod/analytics/v1/data-producers
+  member: !layer prod/frontend/v1
+
+# Team memberships
+
+- !grant
+  roles:
+  - !policy prod/analytics-db
+  - !policy prod/inventory-db
+  member: !group dba
+
+- !grant
+  roles:
+  - !policy prod/analytics/v1
+  member: !group analytics-team
+
+# CI jobs
+- !grant
+  roles:
+  - !group ci/ec2/secrets-users
+  - !group ci/chef/secrets-users
+  members:
+  - !host ci/jenkins/frontend/v1
+
+# Production analytics service
+- !grant
+  roles:
+  - !group prod/analytics-db/secrets-users
+  members:
+  - !layer prod/analytics/v1
+
+- !permit
+  resource: !group prod/analytics-db/secrets-users
+  privilege: read
+  role: !layer prod/analytics/v1
+
+# Permit the frontend to consume inventory.
+- !grant
+  role: !group prod/inventory/v1/consumers
+  member: !layer prod/frontend/v1
+
+- !permit
+  resource: !group prod/inventory/v1/consumers
+  privilege: read
+  role: !layer prod/frontend/v1
+
+# Permit the inventory application to access its database.
+- !grant
+  roles:
+  - !group prod/inventory-db/secrets-users
+  members:
+  - !layer prod/inventory/v1
+
+- !permit
+  resource: !group prod/inventory-db/secrets-users
+  privilege: read
+  role: !layer prod/inventory/v1
+

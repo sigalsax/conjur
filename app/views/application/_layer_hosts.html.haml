@@ -1,0 +1,30 @@
+- count, hosts = layer_hosts
+- if count == 0
+  %p
+    There are no hosts in this layer.
+- elsif count == :forbidden
+  %p.forbidden
+    You do not have permission to view the hosts in this layer.
+- else
+
+.row
+  .col-xs-10
+  .col-xs-2
+    .add-button.pull-right
+      - if editable
+        %button.btn.btn-default{:'data-toggle' => 'modal', :'data-target' => '#add-host-modal'}
+          %i.fa.fa-plus
+          Add Host
+
+%table.table.table-bordered.table-hover
+  %thead
+    %tr
+      %th Name
+      - if editable
+        %th Manage
+  %tbody
+    - hosts.each do |host|
+      %tr
+        %td= link_to_object host
+        - if editable
+          %td.lastColumn= remove_button(container, host, 'hosts')
