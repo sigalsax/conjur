@@ -55,3 +55,4 @@ ci/authn-k8s/dev/policies/*.yml
 *.sw[po]
 
 
+client/node_modules/*
