@@ -57,8 +57,7 @@ This project will be broken up into a couple of different phases:
 ​
 ### Stories
 - (PoC) UI is available (`kind/spike`)
-  - tests
-  - only
+  - tests pass
 - UI login allows account specific login (`kind/enhancement`)
 - UI uses native data objects (`kind/technical-debt`)
 - UI specific API endpoints have been removed (`kind/technical-debt`)

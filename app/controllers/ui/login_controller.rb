@@ -1,11 +1,13 @@
 class Ui::LoginController < Ui::ApplicationController
   include BasicAuthenticator
+  skip_before_action :authenticate_user!
 
   layout 'login'
 
   helper_method :appliance_version
 
   def new
+    renderer.render template: 'login/new'
   end
 
   def create
@@ -24,6 +26,10 @@ class Ui::LoginController < Ui::ApplicationController
   end
 
   private
+
+  def renderer
+    ApplicationController.renderer
+  end
 
   def appliance_version
     ClusterStatus.new.health[:version]

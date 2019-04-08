@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::API
-  include Authenticates
+  # include Authenticates
   include ::ActionView::Layouts
 
   class Unauthorized < RuntimeError

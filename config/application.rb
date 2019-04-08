@@ -64,6 +64,7 @@ module Possum
         /^\/host_factories\/hosts$/,
         /^\/assets\/.*/,
         /^\/authenticators$/,
+        /^\/ui\/login\/new$/,
         /^\/$/
       ]
 

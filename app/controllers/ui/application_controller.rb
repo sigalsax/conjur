@@ -10,7 +10,7 @@ class Ui::ApplicationController < ActionController::Base
 
   before_action :authenticate_user!
   before_action :navigation_menu
-  around_action :expose_conjur_api
+  # around_action :expose_conjur_api
   before_action :clear_conjur_cache
 
   helper_attr :api
@@ -46,8 +46,8 @@ class Ui::ApplicationController < ActionController::Base
   end
 
   def authenticated?
-      !( session_blank?(authorization_session_keys) || session_expired? )
-    end
+    !(session_blank?(authorization_session_keys) || session_expired?)
+  end
 
   def session_expired?
     session[:expires_at] < DateTime.now

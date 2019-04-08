@@ -23,16 +23,16 @@ Rails.application.routes.draw do
 
     # LDAP Routes. PUT for users-selection and saved-users-selection, because
     # there's only one at a time.
-    namespace :ldap do
-      resource :connection_details, :only => [:edit, :update]
-      resource :selected_users, :only => [:show, :edit, :update]
-      resource :saved_users, :only => [:update]
-      resource :import_instructions, :only => [:show]
-    end
+    # namespace :ldap do
+    #   resource :connection_details, :only => [:edit, :update]
+    #   resource :selected_users, :only => [:show, :edit, :update]
+    #   resource :saved_users, :only => [:update]
+    #   resource :import_instructions, :only => [:show]
+    # end
 
     scope '/', format: false, id: /.+/, role: /.+/  do
 
-      get '/cluster', to: 'cluster#list'
+      # get '/cluster', to: 'cluster#list'
 
       [:groups, :hosts, :layers, :policies, :users, :webservices].each do |resource|
         resources resource, only: [ :show ] do
@@ -73,9 +73,6 @@ Rails.application.routes.draw do
 
     end
   end
-
-
-
 
   scope format: false do
     get '/' => 'status#index'
